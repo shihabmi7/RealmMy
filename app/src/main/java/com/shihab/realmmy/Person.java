@@ -19,12 +19,16 @@ package com.shihab.realmmy;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 
 // Your model just have to extend RealmObject.
 // This will inherit an annotation which produces proxy getters and setters for all fields.
 public class Person extends RealmObject {
 
     // All fields are by default persisted.
+
+    @PrimaryKey
+    private long id;
     private String name;
     private int age;
     private String city;
@@ -39,7 +43,7 @@ public class Person extends RealmObject {
     @Ignore
     private int tempReference;
 
-    private long id;
+
 
     // Let your IDE generate getters and setters for you!
     // Or if you like you can even have public fields and no accessors! See Dog.java and Cat.java

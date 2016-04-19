@@ -19,6 +19,8 @@ package com.shihab.realmmy;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +35,7 @@ import io.realm.Sort;
 import io.realm.exceptions.RealmMigrationNeededException;
 
 
-public class IntroExampleActivity extends Activity {
+public class IntroExampleActivity extends AppCompatActivity {
 
     public static final String TAG = IntroExampleActivity.class.getName();
     private LinearLayout rootLayout = null;
@@ -43,12 +45,17 @@ public class IntroExampleActivity extends Activity {
     Button button_save, button_show, button_delete;
     EditText editText_name, editText_age, editText_city;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_realm_basic_example);
         rootLayout = ((LinearLayout) findViewById(R.id.container));
+
+        // you need to add toolbar title
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Realm Activity");
+        setSupportActionBar(toolbar);
+
 
         if (rootLayout != null) {
             rootLayout.removeAllViews();
@@ -56,9 +63,6 @@ public class IntroExampleActivity extends Activity {
         } else {
 
         }
-
-        // These operations are small enough that
-        // we can generally safely run them on the UI thread.
 
         try {
             // Create the Realm configuration
@@ -161,6 +165,15 @@ public class IntroExampleActivity extends Activity {
 
         // When the transaction is committed, all changes are synced to disk.
         realm.commitTransaction();
+        clearText();
+
+    }
+
+    void clearText() {
+
+        editText_name.setText("");
+        editText_age.setText("");
+        editText_city.setText("");
 
     }
 
