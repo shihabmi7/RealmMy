@@ -27,7 +27,7 @@ public class Person extends RealmObject {
 
     // All fields are by default persisted.
 
-    @PrimaryKey
+    //@PrimaryKey
     private long id;
     private String name;
     private int age;

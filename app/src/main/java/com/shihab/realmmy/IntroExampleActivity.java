@@ -19,6 +19,7 @@ package com.shihab.realmmy;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -100,8 +101,12 @@ public class IntroExampleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                addNewPerson(editText_name.getText().toString(),
-                        Integer.parseInt(editText_age.getText().toString()), editText_city.getText().toString());
+                if (checkField()) {
+
+                    addNewPerson(editText_name.getText().toString(),
+                            Integer.parseInt(editText_age.getText().toString()), editText_city.getText().toString());
+                }
+
 
             }
         });
@@ -157,16 +162,40 @@ public class IntroExampleActivity extends AppCompatActivity {
         // All writes must be wrapped in a transaction to facilitate safe multi threading
         realm.beginTransaction();
         // Add a person
-        Person person = realm.createObject(Person.class);
+
         // person.setId(1);
+//        if(realm. ){
+//
+//        }
+        Person person = realm.createObject(Person.class);
+        person.setId(getUniqueId(realm));
         person.setName(name);
         person.setAge(age);
         person.setCity(city);
 
+//        Person person = realm.allObjects(Person.class).first();
+//        if (person.isValid()) {
+//
+//
+//        } else {
+//            // Any operation will throw a IllegalStateException
+//
+//        }
+
+
         // When the transaction is committed, all changes are synced to disk.
         realm.commitTransaction();
         clearText();
+        showSnackBar("Saved Successfully");
+    }
 
+    public static long getUniqueId(Realm realm) {
+        Number num = realm.where(Person.class).max("id");
+        if (num == null) {
+            return 1;
+        } else {
+            return ((long) num + 1);
+        }
     }
 
     void clearText() {
@@ -174,6 +203,23 @@ public class IntroExampleActivity extends AppCompatActivity {
         editText_name.setText("");
         editText_age.setText("");
         editText_city.setText("");
+
+    }
+
+    void showSnackBar(String msg) {
+
+        final Snackbar snackBar = Snackbar.make(findViewById(R.id.myCoordinatorLayout), msg, Snackbar.LENGTH_LONG);
+
+        snackBar.
+                setAction("Dismiss", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        snackBar.dismiss();
+
+                    }
+                })
+                .show();
 
     }
 
@@ -215,10 +261,24 @@ public class IntroExampleActivity extends AppCompatActivity {
         String result = "Now Shows all People Date: total =" + allPersons.size();
         for (int i = 0; i < allPersons.size(); i++) {
 
-            result += "\nName: " + allPersons.get(i).getName() + " \t     Age: " + allPersons.get(i).getAge();
+            result += "\nId: " + allPersons.get(i).getId() + " Name: " + allPersons.get(i).getName() + " \t     Age: " + allPersons.get(i).getAge();
 
         }
         showStatus(result);
+    }
+
+    boolean checkField() {
+
+        if (editText_name.getText().length() > 0 && editText_age.getText().length() > 0 && editText_city.getText().length() > 0) {
+
+            return true;
+
+        } else {
+
+            showSnackBar("Enter all fields...");
+            return false;
+        }
+
     }
 
     private void basicLinkQuery(Realm realm) {
