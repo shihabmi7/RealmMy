@@ -19,6 +19,7 @@ package com.shihab.realmmy;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import io.realm.Realm;
@@ -45,18 +47,19 @@ public class IntroExampleActivity extends AppCompatActivity {
     private RealmConfiguration realmConfig;
     Button button_save, button_show, button_delete;
     EditText editText_name, editText_age, editText_city;
+    ListView listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_realm_basic_example);
         rootLayout = ((LinearLayout) findViewById(R.id.container));
+        listview =(ListView)findViewById(R.id.listview);
 
         // you need to add toolbar title
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Realm Activity");
         setSupportActionBar(toolbar);
-
 
         if (rootLayout != null) {
             rootLayout.removeAllViews();
@@ -72,9 +75,7 @@ public class IntroExampleActivity extends AppCompatActivity {
             realm = Realm.getInstance(realmConfig);
 
         } catch (RealmMigrationNeededException r) {
-
             Log.e("RealmMigrationException", "" + r.getMessage());
-
         }
 
 
@@ -115,31 +116,13 @@ public class IntroExampleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                getFirstPerson();
                 showAllPerson();
 
             }
         });
 
-        // basicCRUD(realm);
-        // basicQuery(realm);
-        // basicLinkQuery(realm);
+       listview.setAdapter(new MyAdapter(getApplicationContext(),0,showAllPerson(),true));
 
-        // More complex operations can be executed on another thread.
-//        new AsyncTask<Void, Void, String>() {
-//            @Override
-//            protected String doInBackground(Void... voids) {
-//                String info;
-//                info = complexReadWrite();
-//                info += complexQuery();
-//                return info;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String result) {
-//                //  showStatus(result);
-//            }
-//        }.execute();
     }
 
     @Override
@@ -255,7 +238,7 @@ public class IntroExampleActivity extends AppCompatActivity {
 
     }
 
-    private void showAllPerson() {
+    private RealmResults<Person>  showAllPerson() {
 
         RealmResults<Person> allPersons = realm.allObjects(Person.class);
         String result = "Now Shows all People Date: total =" + allPersons.size();
@@ -264,7 +247,9 @@ public class IntroExampleActivity extends AppCompatActivity {
             result += "\nId: " + allPersons.get(i).getId() + " Name: " + allPersons.get(i).getName() + " \t     Age: " + allPersons.get(i).getAge();
 
         }
-        showStatus(result);
+        //showStatus(result);
+
+        return  allPersons;
     }
 
     boolean checkField() {
