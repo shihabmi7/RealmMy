@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+
+#ProGuard : Realm
+#
+#
+# ProGuard configuration is provided as part of the Realm library. This means that you don’t need to add any Realm specific rules to your ProGuard configuration

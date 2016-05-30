@@ -1,17 +1,28 @@
-<LinearLayout android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="20dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="#c1c2c3"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/text_person"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/imageView_in_list"
+        android:paddingRight="6dp"
+        android:text="@string/app_name"
         android:textColor="@color/colorPrimary"
-        android:typeface="sans"
-        android:textStyle="bold"
-        android:textSize="22sp"
-        android:text="@string/app_name"/>
+        android:textSize="14sp"
+        android:textStyle="normal"
+        android:typeface="sans" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/imageView_in_list"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentRight="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher" />
+
+</RelativeLayout>

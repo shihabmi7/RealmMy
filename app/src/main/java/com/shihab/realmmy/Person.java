@@ -16,6 +16,9 @@
 
 package com.shihab.realmmy;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
@@ -32,6 +35,9 @@ public class Person extends RealmObject {
     private String name;
     private int age;
     private String city;
+    private String number;
+
+    private byte[] picture;
 
     // Other objects in a one-to-one relation must also subclass RealmObject
     private Dog dog;
@@ -101,5 +107,29 @@ public class Person extends RealmObject {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public byte[] getPicture() {
+        return picture;
+    }
+
+
+    // get BitMap From byte[]
+    public Bitmap getPictureFromByteArray(byte[] bytes) {
+
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes , 0, bytes .length);
+        return bitmap;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 }

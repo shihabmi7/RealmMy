@@ -45,6 +45,8 @@
                 android:hint="name"
                 android:inputType="text" />
 
+
+
             <EditText
                 android:id="@+id/editText_age"
                 android:layout_width="match_parent"
@@ -54,14 +56,31 @@
                 android:hint="age"
                 android:inputType="number" />
 
+            <!--<EditText-->
+                <!--android:id="@+id/editText_city"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:ems="10"-->
+                <!--android:hint="city"-->
+                <!--android:inputType="text" />-->
+
+
             <EditText
-                android:id="@+id/editText_city"
+                android:id="@+id/editText_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:ems="10"
-                android:hint="city"
-                android:inputType="text" />
+                android:hint="number"
+                android:inputType="number" />
+
+
+           <ImageView android:layout_width="45dp"
+               android:id="@+id/imageView"
+               android:src="@mipmap/ic_launcher"
+               android:layout_gravity="center"
+               android:layout_height="45dp"/>
         </LinearLayout>
 
         <LinearLayout

@@ -17,28 +17,27 @@
 package com.shihab.realmmy;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-
 import io.realm.RealmBaseAdapter;
-import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 public class MyAdapter extends RealmBaseAdapter<Person> implements ListAdapter {
 
     private static class MyViewHolder {
         TextView name;
+        ImageView imageView;
     }
 
 
     public MyAdapter(Context context, int resId,
-                     RealmResults<Person> realmResults,
-                     boolean automaticUpdate) {
+                     RealmResults<Person> realmResults
+                     ) {
 
-        super(context, realmResults, automaticUpdate);
+        super(context, realmResults );
 
     }
 
@@ -57,19 +56,23 @@ public class MyAdapter extends RealmBaseAdapter<Person> implements ListAdapter {
                     parent, false);
             viewHolder = new MyViewHolder();
             viewHolder.name = (TextView) convertView.findViewById(R.id.text_person);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imageView_in_list);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (MyViewHolder) convertView.getTag();
         }
 
-        Person person = realmResults.get(position);
-        String result = "\nId: " + person.getId() + " Name: " + person.getName() + " \t     Age: " + person.getAge();
+        if (adapterData.get(position)!=null){
 
-        viewHolder.name.setText(result);
+            Person person = adapterData.get(position);
+            String result = "Id: " + person.getId() + " Name: " + person.getName() + " Age: " + person.getAge()+" mobile: "+person.getNumber();
+
+            viewHolder.name.setText(result);
+            viewHolder.imageView.setImageBitmap(person.getPictureFromByteArray(person.getPicture()));
+        }
+
+
         return convertView;
     }
 
-    public RealmResults<Person> getRealmResults() {
-        return realmResults;
-    }
 }
